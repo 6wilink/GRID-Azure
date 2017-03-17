@@ -8,6 +8,7 @@ STOP=90
 APP=grid-azure
 CONF=/etc/config/$APP
 CMD=/usr/sbin/$APP
+AA_SIGNAL=/tmp/.grid_azure_signal
 
 start() {
 	if [ -f "$CONF" ]; then
@@ -20,7 +21,8 @@ start() {
 }
 
 stop() {
-	echo -n "exit" > "$AA_SINGAL"
+	echo -n "exit" > "$AA_SIGNAL"
 	sleep 1
+	killall $APP
 	cat "$AA_SIGNAL"
 }
