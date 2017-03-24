@@ -5,7 +5,7 @@ local cmd = require 'six.cmd'
 local fmt = require 'six.fmt'
 local file = require 'six.file'
 
-local _echo = fmt.printf
+local _echo = fmt.echo
 local _sleep = cmd.sleep
 local _save = file.write
 local _read = file.read
@@ -86,11 +86,11 @@ end
 
 -- data format
 Task.conf.fmt = {}
-Task.conf.fmt.all = '{"time":"%s",abb":%s,"nw":%s,"gws":%s,"nw":%s}'
+Task.conf.fmt.all = '{"time":%s,"abb":%s,"nw":%s,"gws":%s,"nw":%s}'
 Task.conf.fmt.ts = '{"sys": "%s", "ts": %d}'
 Task.conf.fmt.abb = '{"ssid":"%s","bssid":"%s","noise":%d}'
+Task.conf.fmt.nw = '{"lan_ip":"%s","wan_ip":"%s","eth_rxb":%d,"eth_txb":%d}'
 Task.conf.fmt.gws = ''
-Task.conf.fmt.nw = ''
 Task.conf.fmt.sys = ''
 
 -- encode, decode MQTT Msg
@@ -104,6 +104,12 @@ function Task.data.encode(data_instant, data_delayed)
 		local _fmt = Task.conf.fmt.abb
 		local _abb_data = data_instant.abb
 		_abb = string.format(_fmt, _abb_data.ssid, _abb_data.bssid, _abb_data.noise)
+
+		--if (data_instant[abb])
+		local _fmt = Task.conf.fmt.nw
+		local _nw_data = data_instant.nw
+		_nw = string.format(_fmt, _nw_data.lan_ip or '-', _nw_data.wan_ip or '-', 
+			_nw_data.eth_rxb or 0, _nw_data.eth_txb or 0)
 	end
 
 	local _ts_fmt = Task.conf.fmt.ts

@@ -18,8 +18,8 @@ end
 
 function az_kpi.update.instant(ts)
 	local _data = {}
-	local abb = kpi_abb.ops.Data()
-	local nw = kpi_nw.ops.Data()
+	local abb = kpi_abb.RAW()
+	local nw = kpi_nw.RAW()
 
 	_data.abb = abb or {}
 	_data.nw = nw or {}
@@ -33,8 +33,8 @@ function az_kpi.update.instant_failed()
 end
 
 function az_kpi.update.delayed(ts)
-	local gws = kpi_gws.ops.Data()
-	local sys = kpi_sys.ops.Data()
+	local gws = kpi_gws.RAW()
+	local sys = kpi_sys.RAW()
 end
 
 return az_kpi
