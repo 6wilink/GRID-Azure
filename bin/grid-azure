@@ -1,0 +1,4 @@
+#!/usr/bin/lua
+
+local az = require "az.Agent"
+az.Run()

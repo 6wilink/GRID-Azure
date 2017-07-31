@@ -1,0 +1,28 @@
+#!/bin/sh /etc/rc.common
+# maintainer: Qige Zhao
+# updated on: 2017.03.17
+
+START=90
+STOP=90
+
+APP=grid-azure
+CONF=/etc/config/$APP
+CMD=/usr/sbin/$APP
+AA_SIGNAL=/tmp/.grid_azure_signal
+
+start() {
+	if [ -f "$CONF" ]; then
+		echo "* loading config from file"
+	else
+		echo "* config file missing, using default settings"
+	fi
+
+	$CMD >/dev/null 2>&1 &
+}
+
+stop() {
+	echo -n "exit" > "$AA_SIGNAL"
+	sleep 1
+	killall $APP
+	cat "$AA_SIGNAL"
+}
